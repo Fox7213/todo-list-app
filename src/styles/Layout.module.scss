@@ -1,0 +1,14 @@
+.main {
+  display: flex;
+  align-items: start;
+  gap: 1rem;
+
+  aside {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 20%;
+    background: #006D77;
+    height: 90vh;
+  }
+}

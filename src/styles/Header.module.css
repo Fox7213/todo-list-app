@@ -1,0 +1,10 @@
+.header {
+  background: #83C5BE;
+  height: 10vh;
+  width: 100%;
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+}
+
+/*# sourceMappingURL=Header.module.css.map */
