@@ -2,6 +2,9 @@
   display: flex;
   align-items: start;
   gap: 1rem;
+  background-color: #FFDDD2;
+  overflow:hidden;
+  max-width: 100%;
 }
 .main aside {
   display: flex;

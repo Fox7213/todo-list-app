@@ -1,0 +1,84 @@
+.All{
+    padding: 2%;
+    width: 80%;
+}
+
+.DivAll{
+    width: 84%;
+    background-color: #83C5BE;
+    height: 130px;
+    border-radius: 3px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    color: white;
+    font-weight: 700;
+}
+.AllTop{
+    display: flex;
+    justify-content: space-between;
+    margin: 3% 0;
+}
+
+
+.select {
+    border: 2px solid #006D77;
+    color: #006D77;
+    padding: 7px 12px;
+    border-radius: 2px;
+    font-size: 14px;
+    font-weight: 600;
+    background: none;
+    margin-right: 15px;
+    transition: border-color 0.3s;
+}
+
+.activeSelect {
+    background: #006D77;
+    color: white;
+}
+
+
+.inputWrapper {
+    position: relative;
+  }
+  
+  .styledInput {
+    padding: 7px 30px 7px 6px; 
+    height: 30px;
+    font-size: 14px;
+    width: 14vh;
+    background: none;
+    border: 2px solid #006D77;
+    border-radius: 6px;
+    
+  }
+  ::placeholder { color: #99B0AE; font-size: 14px; }
+  
+  .searchIcon {
+    position: absolute;
+    right: 10px;
+    top: 45%;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 14px;
+    pointer-events: none;
+  }
+  
+
+  .Cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;        
+    gap: 68px;             
+    justify-content: flex-start; 
+  }
+
+  .buttonn{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 4%;
+  }

@@ -1,0 +1,49 @@
+.card{
+    background-color: #006D77;
+    width: 310px;
+    height: 120px;
+    display: flex;
+    justify-content: space-between;
+    color: #FFDDD2;
+    border-radius: 7px;
+    padding: 10px 16px;
+}
+
+.Name{
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 10%;
+}
+
+.date{
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 10%;
+    span{
+        font-size: 16px;
+    }
+}
+
+.stateTask{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .mark{
+        width: 18px;
+        margin-right: 10px;
+    }
+    p{
+        font-size: 15px;
+        font-weight: 200;
+    }
+}
+
+.left{
+    display: flex;
+    flex-direction: column;
+    height: 80px;
+    justify-content: space-between;
+    /* img{
+        margin-bottom: 10%;
+    } */
+}

@@ -1,0 +1,79 @@
+.All {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px); 
+}
+
+
+.form{
+    background-color: #FFDDD2;
+    padding: 30px;
+    border-radius: 16px;
+    max-width: 90vw;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1001;
+
+    width: 84%;
+    margin: 3% auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px 10%;
+}
+
+
+.textareaContainer {
+    margin-top: 2%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .textareaLabel {
+    font-size: 17px;
+    color: #006D77;
+    margin-bottom: 6px;
+  }
+  
+  .textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    outline: none;
+    border: 3px solid #006D77;
+    background: none;
+
+  }
+
+
+
+  .buttonContainer {
+    width: 100%;
+    display: flex;
+    margin-top: 30px;
+  }
+  .button {
+    background-color: #006D77;
+    color: white;
+    padding: 15px 15%;
+    font-size: 17px;
+    font-weight: 200;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .buttonContainer2 {
+    display: flex;
+    gap: 20px;
+  }
