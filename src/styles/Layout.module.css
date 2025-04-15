@@ -3,7 +3,6 @@
   align-items: start;
   gap: 1rem;
   background-color: #FFDDD2;
-  overflow:hidden;
   max-width: 100%;
 }
 .main aside {
@@ -13,6 +12,7 @@
   width: 20%;
   background: #006D77;
   height: 90vh;
+  padding: 2%;
 }
 
 /*# sourceMappingURL=Layout.module.css.map */

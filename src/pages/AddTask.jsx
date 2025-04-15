@@ -1,15 +1,31 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Card from "../components/Card/Card"
 import style from "../styles/AddTask.module.css";
-import iconSrc from "../image/Header/iconSrc.svg";
 import CustomButton from '../components/CustomButton.jsx/CustomButton';
 import Input from "../components/Input/Input"
+import $api from "../../api/http.js";
 
 import i1 from "../image/Inputs/i1.svg"
 import i2 from "../image/Inputs/i2.svg"
 import i3 from "../image/Inputs/i3.svg"
 
 const AddTask = () => {
+
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+
+    const createNewTask = async () => {
+        try {
+            await $api.post("/api/tasks", {
+                title: title,
+                description: description,
+            })
+            alert("Successfully created task")
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     return (
         <>
             <div className={style.All}>
@@ -23,6 +39,8 @@ const AddTask = () => {
                         label="Task Title"
                         placeholder="Task Title"
                         iconSrc={i1}
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
                     />
 
                     <Input
@@ -41,11 +59,13 @@ const AddTask = () => {
                         <textarea
                             className={style.textarea}
                             placeholder="Write important notes"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
                         ></textarea>
                     </div>
 
                     <div className={style.buttonContainer}>
-                        <button className={style.button}>Add to list</button>
+                        <button onClick={createNewTask} className={style.button}>Add to list</button>
                     </div>
                 </div>
 
