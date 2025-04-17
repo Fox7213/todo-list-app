@@ -6,7 +6,7 @@ import i2 from "../../image/Card/2.svg";
 import i3 from "../../image/Card/3.svg";
 import Modal from '../../pages/Modal';
 
-const Card = ({title, description, id, deleteTask, fetchData}) => {
+const Card = ({title, description, id, deleteTask, fetchData, status, onSetStatus}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const onCloseModal = () => {
@@ -20,10 +20,13 @@ const Card = ({title, description, id, deleteTask, fetchData}) => {
                 <div className={style.right}>
                     <h1 className={style.Name}>{title}</h1>
                     <p className={style.date}>Start date: <span>07-07-2023</span></p>
-                    <div className={style.stateTask}>
-                        <img className={style.mark} src={mark} alt=""/>
-                        <p>{description}</p>
+                    <div className={style.stateTask} onClick={() => onSetStatus(id)}>
+                        {/*<img className={style.mark} src={mark} alt=""/>*/}
+                        {
+                            status ? <h1>Done</h1> : <h1>In progress</h1>
+                        }
                     </div>
+                    <p>{description}</p>
                 </div>
 
                 <div className={style.left}>

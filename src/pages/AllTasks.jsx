@@ -33,6 +33,15 @@ const AllTasks = () => {
         }
     }
 
+    const onSetStatus = async (id) => {
+        try{
+            await $api.patch(`/api/tasks/${id}/status`);
+            fetchData()
+        }catch(e){
+            console.log(e)
+        }
+    }
+
     useEffect(() => {
         fetchData()
     }, [])
@@ -83,7 +92,8 @@ const AllTasks = () => {
 
                 <div className={style.Cards}>
                     {
-                        data?.map((task) => <Card fetchData={fetchData} deleteTask={deleteTask} title={task.title} id={task.id}
+                        data?.map((task) => <Card onSetStatus={onSetStatus} status={task.completed} fetchData={fetchData} deleteTask={deleteTask}
+                                                  title={task.title} id={task.id}
                                                   description={task.description}
                                                   key={task.id}/>)
                     }
