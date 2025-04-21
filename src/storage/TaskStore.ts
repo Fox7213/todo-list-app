@@ -6,8 +6,9 @@ export interface Task {
   title: string;
   description: string;
   completed: boolean;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt: Date;
+  dueDate?: Date;
+  order: number;
 }
 
 export class TaskStore {
@@ -45,22 +46,32 @@ export class TaskStore {
 
   // Add a new task
   // post /api/tasks
-  addTask = async (title: string, description: string) => {
+  addTask = async (title: string, description: string, priority?: number, dueDate?: Date | null) => {
     this.isLoading = true;
     this.error = null;
     
     try {
-      const response = await $api.post('/api/tasks', { title, description, status: false });
+      const response = await $api.post('/api/tasks', { 
+        title, 
+        description, 
+        priority: priority || 0,
+        dueDate: dueDate || undefined,
+        completed: false 
+      });
+      
       runInAction(() => {
         this.tasks.push(response.data);
         this.isLoading = false;
       });
+      
+      return response.data;
     } catch (error) {
       runInAction(() => {
         this.error = 'Failed to add task';
         this.isLoading = false;
         console.error(error);
       });
+      throw error;
     }
   }
 

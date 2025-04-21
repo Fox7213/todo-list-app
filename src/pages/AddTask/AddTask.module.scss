@@ -1,10 +1,4 @@
-.All{
-    // padding: 2%;
-    // width: 80%;
-}
-
 .DivAll{
-    // width: 84%;
     background-color: #83C5BE;
     height: 130px;
     border-radius: 3px;
@@ -17,12 +11,17 @@
     font-weight: 700;
 }
 
-.form{
+.form {
     width: 84%;
     margin: 3% auto;
     display: flex;
     flex-wrap: wrap;
-    gap: 30px 10%;
+    gap: 30px;
+    justify-content: space-between;
+}
+
+.formRow {
+    flex-basis: 45%;
 }
 
 
@@ -50,8 +49,6 @@
     background: none;
 
   }
-
-
 
   .buttonContainer {
     width: 100%;

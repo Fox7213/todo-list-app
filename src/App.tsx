@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './App.css';
 import Layout from "./layouts/Layout/BaseLayout";
-import AddTask from './pages/AddTask';
+import AddTask from './pages/AddTask/AddTask';
 import AllTasks from "./pages/AllTasks";
 import HomePage from "./pages/Home/HomePage";
 import CompletedTasks from './pages/СompletedTasks';
