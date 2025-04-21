@@ -1,5 +1,7 @@
 import React from 'react';
-import style from "../../styles/Header.module.css";
+
+import style from "../../styles/Header.module.scss";
+
 import burg from "../../image/Header/burg.svg"
 import iconSrc from "../../image/Header/iconSrc.svg"
 import bell from "../../image/Header/bell.svg"
@@ -7,7 +9,6 @@ import moon from "../../image/Header/moon.svg"
 import man from "../../image/Header/man.svg"
 
 const Header = () => {
-
     const [value, setValue] = React.useState("");
 
     return (

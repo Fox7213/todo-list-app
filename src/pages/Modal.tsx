@@ -1,24 +1,34 @@
-import React, {useEffect, useRef, useState} from 'react';
-import style from "../styles/Modal.module.css";
-import CustomButton from '../components/CustomButton.jsx/CustomButton';
+import { useEffect, useRef, useState } from 'react';
+
+import CustomButton from '../components/CustomButton/CustomButton';
 import Input from "../components/Input/Input";
+import $api from "../../api/http";
+
+import style from "../styles/Modal.module.scss";
 
 import i1 from "../image/Inputs/i1.svg";
 import i2 from "../image/Inputs/i2.svg";
 import i3 from "../image/Inputs/i3.svg";
 import icCompl from "../image/Modal/icCompl.svg";
 import icDel from "../image/Modal/icDel.svg";
-import $api from "../../api/http.js";
 
-const Modal = ({onClose, description, title, id}) => {
-    const modalRef = useRef();
+interface ModalProps {
+  onClose: () => void;
+  description?: string;
+  title?: string;
+  id?: number;
+}
+
+const Modal = ({onClose, description, title, id}: ModalProps) => {
+    const modalRef = useRef<HTMLDivElement>(null);
 
     const [titlee, setTitle] = useState(title);
     const [descriptionn, setDescription] = useState(description);
 
-    const onEditTask = async (id) => {
+    const onEditTask = async (taskId?: number) => {
+        if (!taskId) return;
         try {
-            await $api.patch(`/api/tasks/${id}`, {
+            await $api.patch(`/api/tasks/${taskId}`, {
                 title: titlee,
                 description: descriptionn,
             })
@@ -29,8 +39,8 @@ const Modal = ({onClose, description, title, id}) => {
     }
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (modalRef.current && !modalRef.current.contains(event.target)) {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
                 onClose();
             }
         };

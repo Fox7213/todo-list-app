@@ -1,6 +1,6 @@
-import React from 'react'
 import { Link } from "react-router-dom";
-import style from "../../styles/Aside.module.css";
+import style from "../../styles/Aside.module.scss";
+
 import i1 from "../../image/Aside/dashboard.svg";
 import i2 from "../../image/Aside/allTask.svg";
 import i3 from "../../image/Aside/completedTsk.svg";
@@ -36,6 +36,7 @@ const Aside = () => {
                 <Link
                     to={item.path}
                     key={index}
+                    className={style.link}
                 >
                     <img src={item.icon} alt={item.label} />
                     <span>{item.label}</span>

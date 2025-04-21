@@ -1,15 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import style from '../styles/Alltasks.module.css';
+import { useEffect, useState } from 'react';
+
+import $api from "../../api/http";
+import Card from "../components/Card/Card";
+import CustomButton from '../components/CustomButton/CustomButton';
+
+import style from "../styles/Alltasks.module.scss";
+
 import iconSrc from "../image/Header/iconSrc.svg";
-import Card from "../components/Card/Card"
-import CustomButton from '../components/CustomButton.jsx/CustomButton';
-import $api from "../../api/http.js";
 
 const AllTasks = () => {
     const [option1, setOption1] = useState('');
     const [option2, setOption2] = useState('');
 
-    const [data, setData] = useState([]);
+    const [data, setData] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     const fetchData = async () => {
@@ -23,7 +26,7 @@ const AllTasks = () => {
         }
     }
 
-    const deleteTask = async (id) => {
+    const deleteTask = async (id: number) => {
         try {
             await $api.delete(`api/tasks/${id}`)
             alert("deleted task")
@@ -33,7 +36,7 @@ const AllTasks = () => {
         }
     }
 
-    const onSetStatus = async (id) => {
+    const onSetStatus = async (id: number) => {
         try{
             await $api.patch(`/api/tasks/${id}/status`);
             fetchData()
@@ -92,10 +95,18 @@ const AllTasks = () => {
 
                 <div className={style.Cards}>
                     {
-                        data?.map((task) => <Card onSetStatus={onSetStatus} status={task.completed} fetchData={fetchData} deleteTask={deleteTask}
-                                                  title={task.title} id={task.id}
-                                                  description={task.description}
-                                                  key={task.id}/>)
+                        data?.map((task) => (
+                            <Card
+                                id={task.id}
+                                key={task.id} 
+                                onSetStatus={onSetStatus}
+                                status={task.completed}
+                                fetchData={fetchData}
+                                deleteTask={deleteTask}
+                                title={task.title}
+                                description={task.description}
+                            />
+                        ))
                     }
                 </div>
 

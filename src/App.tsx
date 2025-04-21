@@ -1,11 +1,10 @@
-// App.jsx
-import './App.css'
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import HomePage from "./pages/HomePage.jsx";
-import AllTasks from "./pages/AllTasks.jsx";
-import CompletedTasks from './pages/СompletedTasks.jsx';
-import Layout from "./layouts/BaseLayout.jsx";
-import AddTask from './pages/AddTask.jsx';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import './App.css';
+import Layout from "./layouts/BaseLayout";
+import AddTask from './pages/AddTask';
+import AllTasks from "./pages/AllTasks";
+import HomePage from "./pages/HomePage";
+import CompletedTasks from './pages/СompletedTasks';
 
 function App() {
     return (

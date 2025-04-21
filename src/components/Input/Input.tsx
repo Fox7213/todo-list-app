@@ -1,7 +1,16 @@
-import React from 'react';
-import style from './Input.module.css';
+import { ChangeEvent } from 'react';
+import style from './Input.module.scss';
 
-const Input = ({label, placeholder, iconSrc, value, onChange, type = 'text'}) => {
+interface InputProps {
+  label: string;
+  placeholder?: string;
+  iconSrc?: string;
+  value?: string;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  type?: string;
+}
+
+const Input = ({label, placeholder, iconSrc, value, onChange, type = 'text'}: InputProps) => {
 
     return (
         <div className={style.inputContainer}>

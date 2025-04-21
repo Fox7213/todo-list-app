@@ -1,12 +1,23 @@
-import React, {useState} from 'react';
-import style from "../../styles/Card.module.css";
-import mark from "../../image/Card/mark.svg";
+import { useState } from 'react';
+import Modal from '../../pages/Modal';
+
+import style from "../../styles/Card.module.scss";
+
 import i1 from "../../image/Card/1.svg";
 import i2 from "../../image/Card/2.svg";
 import i3 from "../../image/Card/3.svg";
-import Modal from '../../pages/Modal';
 
-const Card = ({title, description, id, deleteTask, fetchData, status, onSetStatus}) => {
+interface CardProps {
+  title?: string;
+  description?: string;
+  id: number;
+  deleteTask: (id: number) => Promise<void>;
+  fetchData: () => Promise<void>;
+  status?: boolean;
+  onSetStatus: (id: number) => Promise<void>;
+}
+
+const Card = ({title, description, id, deleteTask, fetchData, status, onSetStatus}: CardProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const onCloseModal = () => {

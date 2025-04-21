@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
-import Card from "../components/Card/Card"
-import style from "../styles/AddTask.module.css";
-import CustomButton from '../components/CustomButton.jsx/CustomButton';
-import Input from "../components/Input/Input"
-import $api from "../../api/http.js";
+import { useState } from 'react';
 
-import i1 from "../image/Inputs/i1.svg"
-import i2 from "../image/Inputs/i2.svg"
-import i3 from "../image/Inputs/i3.svg"
+import $api from "../../api/http";
+import Input from "../components/Input/Input";
+
+import style from "../styles/AddTask.module.scss";
+
+import i1 from "../image/Inputs/i1.svg";
+import i2 from "../image/Inputs/i2.svg";
+import i3 from "../image/Inputs/i3.svg";
 
 const AddTask = () => {
 
