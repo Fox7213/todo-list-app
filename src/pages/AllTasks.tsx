@@ -100,7 +100,7 @@ const AllTasks = () => {
                                 id={task.id}
                                 key={task.id} 
                                 onSetStatus={onSetStatus}
-                                status={task.completed}
+                                completed={task.completed}
                                 fetchData={fetchData}
                                 deleteTask={deleteTask}
                                 title={task.title}

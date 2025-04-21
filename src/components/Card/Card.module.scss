@@ -1,12 +1,12 @@
 .card{
     background-color: #006D77;
     width: 310px;
-    height: 160px;
+    // height: 160px;
     display: flex;
     justify-content: space-between;
     color: #FFDDD2;
     border-radius: 7px;
-    padding: 10px 16px;
+    padding: 16px;
 }
 
 .Name{
@@ -26,8 +26,8 @@
 
 .stateTask{
     display: flex;
-    justify-content: center;
     align-items: center;
+
     .mark{
         width: 18px;
         margin-right: 10px;
@@ -41,7 +41,7 @@
 .left{
     display: flex;
     flex-direction: column;
-    height: 80px;
+    // height: 80px;
     justify-content: space-between;
     /* img{
         margin-bottom: 10%;

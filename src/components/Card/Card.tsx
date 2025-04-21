@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import Modal from '../../pages/Modal';
 
-import style from "../../styles/Card.module.scss";
+import style from "./Card.module.scss";
 
 import i1 from "../../image/Card/1.svg";
 import i2 from "../../image/Card/2.svg";
 import i3 from "../../image/Card/3.svg";
+import checkCircle from "../../image/Card/checkCircle.svg";
+import mark from "../../image/Card/mark.svg";
 
 interface CardProps {
   title?: string;
@@ -13,11 +15,11 @@ interface CardProps {
   id: number;
   deleteTask: (id: number) => Promise<void>;
   fetchData: () => Promise<void>;
-  status?: boolean;
+  completed?: boolean;
   onSetStatus: (id: number) => Promise<void>;
 }
 
-const Card = ({title, description, id, deleteTask, fetchData, status, onSetStatus}: CardProps) => {
+const Card = ({title, description, id, deleteTask, fetchData, completed, onSetStatus}: CardProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const onCloseModal = () => {
@@ -32,12 +34,11 @@ const Card = ({title, description, id, deleteTask, fetchData, status, onSetStatu
                     <h1 className={style.Name}>{title}</h1>
                     <p className={style.date}>Start date: <span>07-07-2023</span></p>
                     <div className={style.stateTask} onClick={() => onSetStatus(id)}>
-                        {/*<img className={style.mark} src={mark} alt=""/>*/}
                         {
-                            status ? <h1>Done</h1> : <h1>In progress</h1>
+                            completed ? <><img className={style.mark} src={checkCircle} alt=""/> <span>completed</span></> : <><img className={style.mark} src={mark} alt=""/> <span>Mark as completed</span></>
                         }
                     </div>
-                    <p>{description}</p>
+                    {/* <p>{description}</p> */}
                 </div>
 
                 <div className={style.left}>
