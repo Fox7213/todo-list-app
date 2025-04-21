@@ -1,0 +1,28 @@
+.datePickerContainer {
+  position: relative;
+}
+
+.calendarContainer {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 10;
+  background-color: #FFDDD2;
+  border: 3px solid #006D77;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 8px;
+}
+
+:global(.rdp-chevron) {
+  fill: #006D77!important;
+}
+
+.selected {
+  background-color: #006D77;
+  color: white;
+}
+
+.today {
+  font-weight: bold;
+} 

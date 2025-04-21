@@ -1,43 +1,36 @@
-.inputContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    width: 45%;
-  }
-  
-  .inputLabel {
-    font-size: 17px;
-    color: #006D77;
-  }
-  
-  .inputWrapper {
-    position: relative;
-  }
-  
-  .inputField {
-    width: 100%;
-    padding: 11px 2.5rem 11px 18px;
-    border: 3px solid #006D77;
-    background: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    outline: none;
-  }
-  
-  .inputField:focus {
-    border-color: #4299e1;
-    box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.3);
-  }
-  
-  .inputIconImage {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    width: 18px;
-    height: 18px;
-    object-fit: contain;
-    pointer-events: none;
-  }
+.inputLabel {
+  font-size: 17px;
+  color: #006D77;
+}
 
-  ::placeholder{ color: #006D77; font-size: 15px;}
+.inputWrapper {
+  position: relative;
+}
+
+.inputField {
+  width: 100%;
+  padding: 11px 2.5rem 11px 18px;
+  border: 3px solid #006D77;
+  background: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.inputField:focus {
+  border-color: #4299e1;
+  box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.3);
+}
+
+.inputIconImage {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+::placeholder{ color: #006D77; font-size: 15px;}

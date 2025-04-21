@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect, ChangeEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import useOutsideClick from '../../hooks/useOutsideClick';
 import style from './Dropdown.module.scss';
 
 export interface DropdownOption {
@@ -32,19 +33,10 @@ const Dropdown = ({
   );
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+  // Use the custom hook for handling outside clicks
+  useOutsideClick(dropdownRef, () => {
+    setIsOpen(false);
+  });
 
   // Update selected option when value prop changes
   useEffect(() => {

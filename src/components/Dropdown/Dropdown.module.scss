@@ -1,8 +1,5 @@
 .dropdownContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  width: 45%;
+  min-width: 180px;
 }
 
 .dropdownLabel {
