@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom";
-import style from "../../styles/Aside.module.scss";
+import style from "./Aside.module.scss";
 
-import i1 from "../../image/Aside/dashboard.svg";
+import i4 from "../../image/Aside/AddTask.svg";
 import i2 from "../../image/Aside/allTask.svg";
 import i3 from "../../image/Aside/completedTsk.svg";
-import i4 from "../../image/Aside/AddTask.svg";
+import i1 from "../../image/Aside/dashboard.svg";
 
-const Aside = () => {
+interface AsideProps {
+    isCollapsed: boolean;
+}
+
+const Aside = ({ isCollapsed }: AsideProps) => {
     const menuItems = [
         {
             path: "/",
@@ -31,7 +35,7 @@ const Aside = () => {
     ];
 
     return (
-        <aside>
+        <aside className={isCollapsed ? style.collapsed : ""}>
             {menuItems.map((item, index) => (
                 <Link
                     to={item.path}
@@ -39,11 +43,13 @@ const Aside = () => {
                     className={style.link}
                 >
                     <img src={item.icon} alt={item.label} />
-                    <span>{item.label}</span>
+                    <span className={isCollapsed ? style.hiddenText : ""}>
+                        {item.label}
+                    </span>
                 </Link>
             ))}
         </aside>
-    )
-}
+    );
+};
 
-export default Aside
+export default Aside;

@@ -1,0 +1,48 @@
+.header {
+  background: #83C5BE;
+  height: 10vh;
+  min-height: 60px;
+  width: 100%;
+  display: flex;
+  padding: 10px 2%;
+  justify-content: space-between;
+  align-items: center;
+
+  .burger {
+    cursor: pointer;
+  }
+}
+
+.inputWrapper {
+  position: relative;
+  width: 40%;
+  max-width: 400px;
+
+  .styledInput {
+    width: 100%;
+    padding: 10px 40px 10px 15px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+  }
+  
+  .searchIcon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.NavBar {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+
+  div {
+    cursor: pointer;
+  }
+}

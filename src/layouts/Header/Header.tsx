@@ -1,20 +1,24 @@
 import React from 'react';
 
-import style from "../../styles/Header.module.scss";
+import style from "./Header.module.scss";
 
-import burg from "../../image/Header/burg.svg"
-import iconSrc from "../../image/Header/iconSrc.svg"
-import bell from "../../image/Header/bell.svg"
-import moon from "../../image/Header/moon.svg"
-import man from "../../image/Header/man.svg"
+import bell from "../../image/Header/bell.svg";
+import burg from "../../image/Header/burg.svg";
+import iconSrc from "../../image/Header/iconSrc.svg";
+import man from "../../image/Header/man.svg";
+import moon from "../../image/Header/moon.svg";
 
-const Header = () => {
+interface HeaderProps {
+    onBurgerClick: () => void;
+}
+
+const Header = ({ onBurgerClick }: HeaderProps) => {
     const [value, setValue] = React.useState("");
 
     return (
         <header className={style.header}>
-            <div className={'burger'}>
-                <img src={burg} alt="" />
+            <div className={style.burger} onClick={onBurgerClick}>
+                <img src={burg} alt="Menu" />
             </div>
 
             <div className={style.inputWrapper}>
