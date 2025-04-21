@@ -1,9 +1,9 @@
-import Card from "../components/Card/Card";
-import CustomButton from '../components/CustomButton/CustomButton';
+import Card from "../../components/Card/Card";
+import CustomButton from '../../components/CustomButton/CustomButton';
 
-import style from "../styles/Home.module.scss";
+import style from "./Home.module.scss";
 
-import Add from '../image/Add.svg';
+import Add from '../../image/Add.svg';
 
 const HomePage = () => {
     return (
@@ -19,7 +19,7 @@ const HomePage = () => {
                     <Card id={1} deleteTask={() => Promise.resolve()} fetchData={() => Promise.resolve()} onSetStatus={() => Promise.resolve()}/>
                 </div>
 
-                <div className={style.buttonn}>
+                <div className={style.button}>
                     <CustomButton text="All running Tasks →" />
                 </div>
             </div>
@@ -35,7 +35,7 @@ const HomePage = () => {
                     <Card id={1} deleteTask={() => Promise.resolve()} fetchData={() => Promise.resolve()} onSetStatus={() => Promise.resolve()}/>
                 </div>
 
-                <div className={style.buttonn}>
+                <div className={style.button}>
                     <CustomButton text="All Completed Tasks →" />
                     <img src={Add} alt="" />
                 </div>

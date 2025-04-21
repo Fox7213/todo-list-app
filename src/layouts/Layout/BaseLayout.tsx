@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 
-import Aside from "./Aside/Aside";
-import Header from "./Header/Header";
+import Aside from "../Aside/Aside";
+import Header from "../Header/Header";
 
-import style from "../styles/Layout.module.scss";
+import style from "./Layout.module.scss";
 
 const Layout = () => {
     const [isAsideCollapsed, setIsAsideCollapsed] = useState(false);
@@ -14,11 +14,13 @@ const Layout = () => {
     };
 
     return (
-        <div>
+        <div className={style.layout}>
             <Header onBurgerClick={toggleAside} />
             <main className={style.main}>
                 <Aside isCollapsed={isAsideCollapsed} />
-                <Outlet />
+                <div className={style.content}>
+                    <Outlet />
+                </div>
             </main>
         </div>
     );

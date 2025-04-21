@@ -29,7 +29,6 @@ const AddTask = () => {
     return (
         <>
             <div className={style.All}>
-
                 <div className={style.DivAll}>
                     Create your task
                 </div>
