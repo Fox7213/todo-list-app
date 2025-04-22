@@ -11,9 +11,19 @@ import style from "./Home.module.scss";
 
 import Add from '../../image/Add.svg';
 
+const RECENT_TASKS = 20;
+
 const HomePage = observer(() => {
     const { taskStore } = useStore();
-    const { tasks, isLoading, error, deleteTask, toggleTaskStatus, runningTasks, completedTasks } = taskStore;
+    const { 
+        deleteTask,
+        toggleTaskStatus,
+        runningTasks,
+        completedTasks
+    } = taskStore;
+
+    const recentRunningTasks = runningTasks.slice(0, RECENT_TASKS);
+    const recentCompletedTasks = completedTasks.slice(0, RECENT_TASKS);
 
     const handleDeleteTask = async (id: number) => {
         await deleteTask(id);
@@ -23,14 +33,6 @@ const HomePage = observer(() => {
         await toggleTaskStatus(id);
     };
 
-    if (isLoading && tasks.length === 0) {
-        return <div className={style.loading}>Loading tasks...</div>;
-    }
-
-    if (error) {
-        return <div className={style.error}>{error}</div>;
-    }
-
     return (
         <>
         <div className={style.homePage}>
@@ -38,8 +40,8 @@ const HomePage = observer(() => {
                 <h1 className={style.h1}>Running Tasks</h1>
                 
                 <div className={style.cards}>
-                    {runningTasks.length > 0 ? (
-                        runningTasks.map((task: Task) => (
+                    {recentRunningTasks.length > 0 ? (
+                        recentRunningTasks.map((task: Task) => (
                             <Card 
                                 key={task.id}
                                 task={task}
@@ -63,8 +65,8 @@ const HomePage = observer(() => {
                 <h1 className={style.h1}>Completed Tasks</h1>
 
                 <div className={style.cards}>
-                    {completedTasks.length > 0 ? (
-                        completedTasks.map((task: Task) => (
+                    {recentCompletedTasks.length > 0 ? (
+                        recentCompletedTasks.map((task: Task) => (
                             <Card 
                                 key={task.id}
                                 task={task}
