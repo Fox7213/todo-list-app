@@ -1,8 +1,10 @@
+import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import { useStore } from '../../storage/StoreContext';
+import { useTheme } from '../../theme/ThemeContext';
 
 import style from "./Header.module.scss";
 
@@ -15,9 +17,14 @@ interface HeaderProps {
     onBurgerClick: () => void;
 }
 
+const StyledHeader = styled.header`
+    background-color: ${props => props.theme.colors.header};
+`;
+
 const Header = observer(({ onBurgerClick }: HeaderProps) => {
     const { taskStore } = useStore();
     const location = useLocation();
+    const { toggleTheme } = useTheme();
     
     // Check if we're on the home page
     const isHomePage = location.pathname === '/';
@@ -27,7 +34,7 @@ const Header = observer(({ onBurgerClick }: HeaderProps) => {
     };
 
     return (
-        <header className={style.header}>
+        <StyledHeader className={style.header}>
             <div className={style.burger} onClick={onBurgerClick}>
                 <img src={burg} alt="Menu" />
             </div>
@@ -45,14 +52,14 @@ const Header = observer(({ onBurgerClick }: HeaderProps) => {
             )}
 
             <nav className={style.NavBar}>
-                <div><img src={moon} alt="" /></div>
+                <div onClick={toggleTheme}>
+                    <img src={moon} alt="Toggle theme" />
+                </div>
                 <Link to="/addTask">
-                    <img src={Add} alt="" />
+                    <img src={Add} alt="Add task" />
                 </Link>
-                {/* <div><img src={bell} alt="" /></div>
-                <div><img src={man} alt="" /></div> */}
             </nav>
-        </header>
+        </StyledHeader>
     );
 });
 

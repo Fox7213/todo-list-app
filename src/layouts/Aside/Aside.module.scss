@@ -35,5 +35,12 @@ a{
 }
 
 aside {
+    display: flex; 
+    flex-direction: column;
+    gap: 1rem;
+    width: 20%;
+    // background: #006D77;
+    height: 100%;
+    padding: 2%;
     transition: width 0.3s ease;
 }

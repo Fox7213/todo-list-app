@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import { Link } from "react-router-dom";
 import style from "./Aside.module.scss";
 
@@ -9,6 +10,10 @@ import i1 from "../../image/Aside/dashboard.svg";
 interface AsideProps {
     isCollapsed: boolean;
 }
+
+const StyledAside = styled.aside`
+    background-color: ${props => props.theme.colors.aside};
+`;
 
 const Aside = ({ isCollapsed }: AsideProps) => {
     const menuItems = [
@@ -35,7 +40,7 @@ const Aside = ({ isCollapsed }: AsideProps) => {
     ];
 
     return (
-        <aside className={isCollapsed ? style.collapsed : ""}>
+        <StyledAside className={isCollapsed ? style.collapsed : ""}>
             {menuItems.map((item, index) => (
                 <Link
                     to={item.path}
@@ -43,12 +48,10 @@ const Aside = ({ isCollapsed }: AsideProps) => {
                     className={style.link}
                 >
                     <img src={item.icon} alt={item.label} />
-                    <span className={isCollapsed ? style.hiddenText : ""}>
-                        {item.label}
-                    </span>
+                    {!isCollapsed && <span>{item.label}</span>}
                 </Link>
             ))}
-        </aside>
+        </StyledAside>
     );
 };
 
