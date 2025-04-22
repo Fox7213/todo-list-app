@@ -48,9 +48,26 @@
   .Cards {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;        
-    gap: 68px;             
-    justify-content: flex-start; 
+    flex-wrap: wrap;
+    gap: 20px;
+    
+    & > div {
+      flex: 0 0 calc(33.333% - 14px); /* Exact width for 3 items per row with 20px gap */
+      margin-bottom: 20px;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 1200px) {
+      & > div {
+        flex: 0 0 calc(50% - 10px); /* 2 items per row on medium screens */
+      }
+    }
+    
+    @media (max-width: 768px) {
+      & > div {
+        flex: 0 0 100%; /* 1 item per row on small screens */
+      }
+    }
   }
 
   .buttonn{
