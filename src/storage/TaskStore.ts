@@ -1,3 +1,4 @@
+import Fuse from 'fuse.js';
 import { flow, makeAutoObservable, runInAction } from 'mobx';
 import $api from '../../api/http';
 
@@ -20,6 +21,9 @@ export class TaskStore {
 
   lastFetched: number | null = null;
   fetchDebounceTimeout: number | null = null;
+  
+  // Fuse instance for fuzzy search
+  private fuse: Fuse<Task> | null = null;
 
   constructor() {
     makeAutoObservable(this, {
@@ -28,6 +32,21 @@ export class TaskStore {
       runningTasks: true,
       fetchTasks: flow, // explicitly declare generator-based async action
     });
+    
+    // Initialize Fuse instance
+    this.initializeFuse();
+  }
+  
+  // Initialize or reinitialize the Fuse instance when tasks change
+  private initializeFuse() {
+    const options = {
+      keys: ['title'],
+      threshold: 0.5, // Lower threshold means more strict matching
+      ignoreLocation: true,
+      includeScore: true
+    };
+    
+    this.fuse = new Fuse(this.tasks, options);
   }
 
   // Fetch all tasks with debouncing and caching
@@ -58,6 +77,9 @@ export class TaskStore {
       const response = yield $api.get('/api/tasks');
       this.tasks = response.data;
       this.lastFetched = Date.now();
+      
+      // Reinitialize Fuse with the new tasks array
+      this.initializeFuse();
     } catch (e) {
       this.error = 'Failed to fetch tasks';
       console.error(e);
@@ -84,6 +106,9 @@ export class TaskStore {
       runInAction(() => {
         this.tasks.push(response.data);
         this.isLoading = false;
+        
+        // Reinitialize Fuse with the updated tasks array
+        this.initializeFuse();
       });
       
       return response.data;
@@ -113,6 +138,7 @@ export class TaskStore {
         ...this.tasks[taskIndex],
         completed: !originalStatus
       };
+      this.initializeFuse(); // Update Fuse index after changes
     });
     
     // Then make the API call
@@ -157,6 +183,7 @@ export class TaskStore {
           this.tasks[index] = response.data;
         }
         this.isLoading = false;
+        this.initializeFuse(); // Update Fuse index after changes
       });
     } catch (error) {
       runInAction(() => {
@@ -178,6 +205,7 @@ export class TaskStore {
       runInAction(() => {
         this.tasks = this.tasks.filter(task => task.id !== id);
         this.isLoading = false;
+        this.initializeFuse(); // Update Fuse index after changes
       });
     } catch (error) {
       runInAction(() => {
@@ -206,26 +234,22 @@ export class TaskStore {
     return this.tasks.filter(task => !task.completed);
   }
 
-  // Get filtered tasks
+  // Get filtered tasks with fuzzy search
   get filteredTasks() {
-    return this.tasks
-      .filter(task => {
-        // Apply search filter
-        if (this.searchQuery) {
-          const query = this.searchQuery.toLowerCase();
-          return (
-            task.title.toLowerCase().includes(query) ||
-            task.description.toLowerCase().includes(query)
-          );
-        }
-        return true;
-      })
-      .filter(task => {
-        // Apply status filter
-        if (this.statusFilter === 'all') return true;
-        if (this.statusFilter === 'completed') return task.completed;
-        if (this.statusFilter === 'inProgress') return !task.completed;
-        return true;
-      });
+    let filtered = this.tasks;
+    
+    // Apply fuzzy search if query exists and fuse is initialized
+    if (this.searchQuery && this.fuse) {
+      const results = this.fuse.search(this.searchQuery);
+      filtered = results.map(result => result.item);
+    }
+    
+    // Apply status filter
+    return filtered.filter(task => {
+      if (this.statusFilter === 'all') return true;
+      if (this.statusFilter === 'completed') return task.completed;
+      if (this.statusFilter === 'inProgress') return !task.completed;
+      return true;
+    });
   }
 } 

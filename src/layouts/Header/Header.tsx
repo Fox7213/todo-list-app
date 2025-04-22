@@ -1,4 +1,8 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { useLocation } from 'react-router-dom';
+
+import { useStore } from '../../storage/StoreContext';
 
 import style from "./Header.module.scss";
 
@@ -12,8 +16,16 @@ interface HeaderProps {
     onBurgerClick: () => void;
 }
 
-const Header = ({ onBurgerClick }: HeaderProps) => {
-    const [value, setValue] = React.useState("");
+const Header = observer(({ onBurgerClick }: HeaderProps) => {
+    const { taskStore } = useStore();
+    const location = useLocation();
+    
+    // Check if we're on the home page
+    const isHomePage = location.pathname === '/';
+
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        taskStore.setSearchQuery(e.target.value);
+    };
 
     return (
         <header className={style.header}>
@@ -21,17 +33,18 @@ const Header = ({ onBurgerClick }: HeaderProps) => {
                 <img src={burg} alt="Menu" />
             </div>
 
-            <div className={style.inputWrapper}>
-                <input
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
-                    className={style.styledInput}
-                    placeholder="write you project name"
-                />
-                <img src={iconSrc} alt="search" className={style.searchIcon} />
-            </div>
+            {isHomePage && (
+                <div className={style.inputWrapper}>
+                    <input
+                        value={taskStore.searchQuery}
+                        onChange={handleSearchChange}
+                        className={style.styledInput}
+                        placeholder="Search tasks..."
+                    />
+                    <img src={iconSrc} alt="search" className={style.searchIcon} />
+                </div>
+            )}
 
-            {/* <input value={value} onChange={(e) => setValue(e.target.value)} /> */}
             <nav className={style.NavBar}>
                 <div><img src={bell} alt="" /></div>
                 <div><img src={moon} alt="" /></div>
@@ -39,6 +52,6 @@ const Header = ({ onBurgerClick }: HeaderProps) => {
             </nav>
         </header>
     );
-};
+});
 
 export default Header;

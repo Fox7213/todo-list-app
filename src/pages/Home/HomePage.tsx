@@ -11,19 +11,23 @@ import style from "./Home.module.scss";
 
 import Add from '../../image/Add.svg';
 
-const RECENT_TASKS = 20;
+const RECENT_TASKS = 3;
 
 const HomePage = observer(() => {
     const { taskStore } = useStore();
     const { 
         deleteTask,
         toggleTaskStatus,
-        runningTasks,
-        completedTasks
+        filteredTasks
     } = taskStore;
 
-    const recentRunningTasks = runningTasks.slice(0, RECENT_TASKS);
-    const recentCompletedTasks = completedTasks.slice(0, RECENT_TASKS);
+    // Filter by completion status after applying search filter
+    const filteredRunningTasks = filteredTasks.filter(task => !task.completed);
+    const filteredCompletedTasks = filteredTasks.filter(task => task.completed);
+
+    // Get the most recent tasks
+    const recentRunningTasks = filteredRunningTasks.slice(0, RECENT_TASKS);
+    const recentCompletedTasks = filteredCompletedTasks.slice(0, RECENT_TASKS);
 
     const handleDeleteTask = async (id: number) => {
         await deleteTask(id);
@@ -50,7 +54,9 @@ const HomePage = observer(() => {
                             />
                         ))
                     ) : (
-                        <div className={style.noTasks}>No running tasks</div>
+                        <div className={style.noTasks}>
+                            {taskStore.searchQuery ? "No matching running tasks" : "No running tasks"}
+                        </div>
                     )}
                 </div>
 
