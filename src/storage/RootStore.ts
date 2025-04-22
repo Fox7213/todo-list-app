@@ -6,6 +6,11 @@ export class RootStore {
   constructor() {
     this.taskStore = new TaskStore();
   }
+
+  // Initialize all application data
+  initialize = async () => {
+    await this.taskStore.fetchTasks();
+  }
 }
 
 // Create a single instance of the store

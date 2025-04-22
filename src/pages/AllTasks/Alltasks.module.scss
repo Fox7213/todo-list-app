@@ -1,13 +1,4 @@
-// .AllTop{
-//     margin: 3.5% 0;
-// }
-// .All{
-//     padding: 2%;
-//     width: 80%;
-// }
-
 .DivAll{
-    // width: 84%;
     background-color: #83C5BE;
     height: 130px;
     border-radius: 3px;
@@ -21,9 +12,26 @@
 }
 .AllTop{
     display: flex;
-    justify-content: flex-end; 
-    align-items: center;   
+    justify-content: space-between;
     margin: 3% 0;
+}
+
+
+.select {
+    border: 2px solid #006D77;
+    color: #006D77;
+    padding: 7px 12px;
+    border-radius: 2px;
+    font-size: 14px;
+    font-weight: 600;
+    background: none;
+    margin-right: 15px;
+    transition: border-color 0.3s;
+}
+
+.activeSelect {
+    background: #006D77;
+    color: white;
 }
 
 
@@ -46,7 +54,7 @@
   .searchIcon {
     position: absolute;
     right: 10px;
-    top: 48%;
+    top: 45%;
     transform: translateY(-50%);
     width: 14px;
     height: 14px;

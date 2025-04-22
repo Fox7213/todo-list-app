@@ -1,6 +1,6 @@
 import { CSSProperties, MouseEvent } from 'react';
 
-import styles from '../../styles/CustomButton.module.scss';
+import styles from './CustomButton.module.scss';
 
 interface CustomButtonProps {
   style?: CSSProperties;

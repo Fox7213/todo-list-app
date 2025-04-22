@@ -1,55 +1,20 @@
-import { useEffect, useState } from 'react';
+import { observer } from 'mobx-react-lite';
+import { useState } from 'react';
+import { useStore } from '../../storage/StoreContext';
 
-import $api from "../../api/http";
-import Card from "../components/Card/Card";
-import CustomButton from '../components/CustomButton/CustomButton';
+import Card from "../../components/Card/Card";
+import CustomButton from '../../components/CustomButton/CustomButton';
 
-import style from "../styles/Alltasks.module.scss";
+import style from "./Alltasks.module.scss";
 
-import iconSrc from "../image/Header/iconSrc.svg";
+import iconSrc from "../../image/Header/iconSrc.svg";
 
-const AllTasks = () => {
+const AllTasks = observer(() => {
+    const { taskStore } = useStore();
+    const { tasks, isLoading, deleteTask, toggleTaskStatus } = taskStore;
     const [option1, setOption1] = useState('');
     const [option2, setOption2] = useState('');
 
-    const [data, setData] = useState<any[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-
-    const fetchData = async () => {
-        setIsLoading(true);
-        try {
-            const res = await $api.get("/api/tasks");
-            setData(res.data)
-            setIsLoading(false);
-        } catch {
-            setIsLoading(false);
-        }
-    }
-
-    const deleteTask = async (id: number) => {
-        try {
-            await $api.delete(`api/tasks/${id}`)
-            alert("deleted task")
-            fetchData()
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-    const onSetStatus = async (id: number) => {
-        try{
-            await $api.patch(`/api/tasks/${id}/status`);
-            fetchData()
-        }catch(e){
-            console.log(e)
-        }
-    }
-
-    useEffect(() => {
-        fetchData()
-    }, [])
-
-    if (isLoading) return <h1>Loading...</h1>
     return (
         <>
             <div className={style.All}>
@@ -94,17 +59,14 @@ const AllTasks = () => {
                 </div>
 
                 <div className={style.Cards}>
+                    {isLoading && <p>Loading...</p> }
                     {
-                        data?.map((task) => (
+                        !isLoading && tasks?.map((task) => (
                             <Card
-                                id={task.id}
+                                task={task}
                                 key={task.id} 
-                                onSetStatus={onSetStatus}
-                                completed={task.completed}
-                                fetchData={fetchData}
+                                onSetStatus={toggleTaskStatus}
                                 deleteTask={deleteTask}
-                                title={task.title}
-                                description={task.description}
                             />
                         ))
                     }
@@ -117,6 +79,6 @@ const AllTasks = () => {
             </div>
         </>
     );
-};
+});
 
 export default AllTasks;

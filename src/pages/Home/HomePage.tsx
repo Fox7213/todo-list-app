@@ -1,22 +1,19 @@
 import { observer } from "mobx-react-lite";
-import { useEffect } from "react";
-import Card from "../../components/Card/Card";
-import CustomButton from '../../components/CustomButton/CustomButton';
-import Add from '../../image/Add.svg';
+import { Link } from "react-router-dom";
+
 import { useStore } from "../../storage/StoreContext";
 import { Task } from "../../storage/TaskStore";
+
+import Card from "../../components/Card/Card";
+import CustomButton from '../../components/CustomButton/CustomButton';
+
 import style from "./Home.module.scss";
+
+import Add from '../../image/Add.svg';
 
 const HomePage = observer(() => {
     const { taskStore } = useStore();
-    const { tasks, isLoading, error, fetchTasks, deleteTask, toggleTaskStatus } = taskStore;
-
-    useEffect(() => {
-        fetchTasks();
-    }, [fetchTasks]);
-
-    const runningTasks = tasks.filter((task: Task) => !task.completed);
-    const completedTasks = tasks.filter((task: Task) => task.completed);
+    const { tasks, isLoading, error, deleteTask, toggleTaskStatus, runningTasks, completedTasks } = taskStore;
 
     const handleDeleteTask = async (id: number) => {
         await deleteTask(id);
@@ -45,12 +42,8 @@ const HomePage = observer(() => {
                         runningTasks.map((task: Task) => (
                             <Card 
                                 key={task.id}
-                                id={task.id}
-                                title={task.title}
-                                description={task.description}
-                                completed={task.completed}
+                                task={task}
                                 deleteTask={handleDeleteTask}
-                                fetchData={fetchTasks}
                                 onSetStatus={handleToggleStatus}
                             />
                         ))
@@ -74,12 +67,8 @@ const HomePage = observer(() => {
                         completedTasks.map((task: Task) => (
                             <Card 
                                 key={task.id}
-                                id={task.id}
-                                title={task.title}
-                                description={task.description}
-                                completed={task.completed}
+                                task={task}
                                 deleteTask={handleDeleteTask}
-                                fetchData={fetchTasks}
                                 onSetStatus={handleToggleStatus}
                             />
                         ))
@@ -89,8 +78,12 @@ const HomePage = observer(() => {
                 </div>
 
                 <div className={style.button}>
-                    <CustomButton text="All Completed Tasks →" />
-                    <img src={Add} alt="" />
+                    <Link to="/completedtasks">
+                        <CustomButton text="All Completed Tasks →" />
+                    </Link>
+                    <Link to="/addTask">
+                        <img src={Add} alt="" />
+                    </Link>
                 </div>
             </div>
         </div>

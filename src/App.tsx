@@ -1,12 +1,18 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import './App.css';
+
+import { useInitialize } from "./hooks/useInitialize";
+
 import Layout from "./layouts/Layout/BaseLayout";
 import AddTask from './pages/AddTask/AddTask';
-import AllTasks from "./pages/AllTasks";
+import AllTasks from "./pages/AllTasks/AllTasks";
+import CompletedTasks from './pages/CompletedTasks/СompletedTasks';
 import HomePage from "./pages/Home/HomePage";
-import CompletedTasks from './pages/СompletedTasks';
+
+import './App.css';
 
 function App() {
+    useInitialize();
+
     return (
         <BrowserRouter>
             <Routes>

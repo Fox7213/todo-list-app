@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import Modal from '../../pages/Modal';
+
+import { Task } from '../../storage/TaskStore';
+import Modal from '../Modal/Modal';
 
 import style from "./Card.module.scss";
 
@@ -10,21 +12,17 @@ import checkCircle from "../../image/Card/checkCircle.svg";
 import mark from "../../image/Card/mark.svg";
 
 interface CardProps {
-  title?: string;
-  description?: string;
-  id: number;
+  task: Task;
   deleteTask: (id: number) => Promise<void>;
-  fetchData: () => Promise<void>;
-  completed?: boolean;
   onSetStatus: (id: number) => Promise<void>;
 }
 
-const Card = ({title, description, id, deleteTask, fetchData, completed, onSetStatus}: CardProps) => {
+const Card = ({task, deleteTask, onSetStatus}: CardProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const {title, completed, id} = task;
 
     const onCloseModal = () => {
         setIsModalOpen(false);
-        fetchData()
     }
 
     return (
@@ -38,7 +36,6 @@ const Card = ({title, description, id, deleteTask, fetchData, completed, onSetSt
                             completed ? <><img className={style.mark} src={checkCircle} alt=""/> <span>completed</span></> : <><img className={style.mark} src={mark} alt=""/> <span>Mark as completed</span></>
                         }
                     </div>
-                    {/* <p>{description}</p> */}
                 </div>
 
                 <div className={style.left}>
@@ -48,8 +45,14 @@ const Card = ({title, description, id, deleteTask, fetchData, completed, onSetSt
                 </div>
             </div>
 
-            {isModalOpen &&
-                <Modal title={title} id={id} description={description} onClose={() => onCloseModal()}/>}
+            {
+                isModalOpen &&
+                    <Modal
+                        task={task}
+                        onClose={() => onCloseModal()}
+                        onDelete={() => deleteTask(id)}
+                    />
+            }
         </>
     );
 };

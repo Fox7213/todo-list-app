@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from 'mobx';
+import { flow, makeAutoObservable, runInAction } from 'mobx';
 import $api from '../../api/http';
 
 export interface Task {
@@ -18,31 +18,53 @@ export class TaskStore {
   searchQuery: string = '';
   statusFilter: 'all' | 'completed' | 'inProgress' = 'all';
 
+  lastFetched: number | null = null;
+  fetchDebounceTimeout: number | null = null;
+
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable(this, {
+      filteredTasks: true, // Mark computed properties
+      completedTasks: true,
+      runningTasks: true,
+      fetchTasks: flow, // explicitly declare generator-based async action
+    });
   }
 
-  // Fetch all tasks
+  // Fetch all tasks with debouncing and caching
   // get /api/tasks
-  fetchTasks = async () => {
+  fetchTasks = flow(function* (this: TaskStore, force = false) {
+    const DEBOUNCE_TIME = 5000;
+    // Skip fetch if recently loaded (within last 5 seconds) unless forced
+    const now = Date.now();
+    if (!force && this.lastFetched && now - this.lastFetched < DEBOUNCE_TIME) {
+      return;
+    }
+    
+    // Debounce multiple fetch calls
+    if (this.fetchDebounceTimeout) {
+      clearTimeout(this.fetchDebounceTimeout);
+    }
+    
+    yield new Promise(resolve => {
+      this.fetchDebounceTimeout = setTimeout(resolve, 300);
+    });
+
+    if (this.isLoading) return;
+
     this.isLoading = true;
     this.error = null;
-    
+
     try {
-      const response = await $api.get('/api/tasks');
-      runInAction(() => {
-        console.log(response.data);
-        this.tasks = response.data;
-        this.isLoading = false;
-      });
-    } catch (error) {
-      runInAction(() => {
-        this.error = 'Failed to fetch tasks';
-        this.isLoading = false;
-        console.error(error);
-      });
+      const response = yield $api.get('/api/tasks');
+      this.tasks = response.data;
+      this.lastFetched = Date.now();
+    } catch (e) {
+      this.error = 'Failed to fetch tasks';
+      console.error(e);
+    } finally {
+      this.isLoading = false;
     }
-  }
+  });
 
   // Add a new task
   // post /api/tasks
@@ -80,24 +102,35 @@ export class TaskStore {
   toggleTaskStatus = async (id: number) => {
     const task = this.tasks.find(task => task.id === id);
     if (!task) return;
-
-    this.isLoading = true;
-    this.error = null;
     
+    // Optimistic update
+    const originalStatus = task.completed;
+    const taskIndex = this.tasks.findIndex(t => t.id === id);
+    
+    // Update UI immediately
+    runInAction(() => {
+      this.tasks[taskIndex] = {
+        ...this.tasks[taskIndex],
+        completed: !originalStatus
+      };
+    });
+    
+    // Then make the API call
     try {
       const response = await $api.patch(`/api/tasks/${id}/status`);
       
+      // Update with server data if needed
       runInAction(() => {
-        const index = this.tasks.findIndex(t => t.id === id);
-        if (index !== -1) {
-          this.tasks[index] = response.data;
-        }
-        this.isLoading = false;
+        this.tasks[taskIndex] = response.data;
       });
     } catch (error) {
+      // Revert on error
       runInAction(() => {
+        this.tasks[taskIndex] = {
+          ...this.tasks[taskIndex],
+          completed: originalStatus
+        };
         this.error = 'Failed to update task status';
-        this.isLoading = false;
         console.error(error);
       });
     }
@@ -105,14 +138,17 @@ export class TaskStore {
 
   // Edit task
   // patch /api/tasks/:id
-  editTask = async (id: number, title: string, description: string) => {
+  editTask = async (id: number, title: string, description: string, priority: number, createdAt: Date, dueDate?: Date | null) => {
     this.isLoading = true;
     this.error = null;
-    
+    console.log(id, title, description, priority, createdAt, dueDate);
     try {
       const response = await $api.patch(`/api/tasks/${id}`, { 
         title, 
-        description 
+        description,
+        priority,
+        createdAt,
+        dueDate: dueDate || undefined
       });
       
       runInAction(() => {
@@ -160,6 +196,14 @@ export class TaskStore {
   // Set status filter
   setStatusFilter = (filter: 'all' | 'completed' | 'inProgress') => {
     this.statusFilter = filter;
+  }
+
+  get completedTasks() {
+    return this.tasks.filter(task => task.completed);
+  }
+  
+  get runningTasks() {
+    return this.tasks.filter(task => !task.completed);
   }
 
   // Get filtered tasks
