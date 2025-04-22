@@ -29,11 +29,11 @@ const HomePage = observer(() => {
     const recentRunningTasks = filteredRunningTasks.slice(0, RECENT_TASKS);
     const recentCompletedTasks = filteredCompletedTasks.slice(0, RECENT_TASKS);
 
-    const handleDeleteTask = async (id: number) => {
+    const handleDeleteTask = async (id: string) => {
         await deleteTask(id);
     };
 
-    const handleToggleStatus = async (id: number) => {
+    const handleToggleStatus = async (id: string) => {
         await toggleTaskStatus(id);
     };
 
@@ -61,7 +61,9 @@ const HomePage = observer(() => {
                 </div>
 
                 <div className={style.button}>
-                    <CustomButton text="All running Tasks →" />
+                    <Link to="/alltasks?status=inProgress">
+                        <CustomButton text="All running Tasks →" />
+                    </Link>
                 </div>
             </div>
 

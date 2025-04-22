@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { useStore } from '../../storage/StoreContext';
 
 import Card from "../../components/Card/Card";
@@ -32,6 +32,27 @@ const AllTasks = observer(() => {
     } = taskStore;
     
     const location = useLocation();
+    const [searchParams] = useSearchParams();
+    
+    // State to track the selected status in the dropdown
+    const [selectedStatus, setSelectedStatus] = useState('');
+    
+    // Set initial status filter based on URL parameter
+    useEffect(() => {
+        const statusParam = searchParams.get('status');
+        if (statusParam) {
+            setStatusFilter(statusParam as 'all' | 'completed' | 'inProgress');
+            
+            // Update the dropdown value to match the filter
+            if (statusParam === 'inProgress') {
+                setSelectedStatus('In Progress');
+            } else if (statusParam === 'completed') {
+                setSelectedStatus('Completed');
+            } else {
+                setSelectedStatus('');
+            }
+        }
+    }, [searchParams, setStatusFilter]);
     
     // Reset filters when component unmounts or when location changes
     useEffect(() => {
@@ -56,6 +77,8 @@ const AllTasks = observer(() => {
     };
     
     const handleStatusChange = (value: string) => {
+        setSelectedStatus(value);
+        
         if (value === 'Completed') {
             setStatusFilter('completed');
         } else if (value === 'In Progress') {
@@ -116,7 +139,7 @@ const AllTasks = observer(() => {
                                 onChange={handleStatusChange}
                                 placeholder="By Status"
                                 iconSrc={i3}
-                                value={statusFilter}
+                                value={selectedStatus}
                             />
                         </div>
                     </div>
