@@ -9,8 +9,6 @@ import CustomButton from '../../components/CustomButton/CustomButton';
 
 import style from "./Home.module.scss";
 
-import Add from '../../image/Add.svg';
-
 const RECENT_TASKS = 3;
 
 const HomePage = observer(() => {
@@ -90,9 +88,6 @@ const HomePage = observer(() => {
                 <div className={style.button}>
                     <Link to="/completedtasks">
                         <CustomButton text="All Completed Tasks →" />
-                    </Link>
-                    <Link to="/addTask">
-                        <img src={Add} alt="" />
                     </Link>
                 </div>
             </div>

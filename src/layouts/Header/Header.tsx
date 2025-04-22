@@ -1,15 +1,14 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { useStore } from '../../storage/StoreContext';
 
 import style from "./Header.module.scss";
 
-import bell from "../../image/Header/bell.svg";
+import Add from '../../image/Add.svg';
 import burg from "../../image/Header/burg.svg";
 import iconSrc from "../../image/Header/iconSrc.svg";
-import man from "../../image/Header/man.svg";
 import moon from "../../image/Header/moon.svg";
 
 interface HeaderProps {
@@ -46,9 +45,12 @@ const Header = observer(({ onBurgerClick }: HeaderProps) => {
             )}
 
             <nav className={style.NavBar}>
-                <div><img src={bell} alt="" /></div>
                 <div><img src={moon} alt="" /></div>
-                <div><img src={man} alt="" /></div>
+                <Link to="/addTask">
+                    <img src={Add} alt="" />
+                </Link>
+                {/* <div><img src={bell} alt="" /></div>
+                <div><img src={man} alt="" /></div> */}
             </nav>
         </header>
     );
