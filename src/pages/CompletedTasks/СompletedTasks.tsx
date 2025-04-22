@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Card from "../../components/Card/Card";
 import CustomButton from '../../components/CustomButton/CustomButton';
@@ -16,6 +16,14 @@ const ITEMS_PER_PAGE = 6;
 const CompletedTasks = observer(() => {
     const { taskStore } = useStore();
     const { isLoading, deleteTask, toggleTaskStatus, setSearchQuery, searchQuery } = taskStore;
+    
+    // Reset filters when component unmounts
+    useEffect(() => {
+        return () => {
+            // This cleanup function runs when component unmounts
+            setSearchQuery('');
+        };
+    }, [setSearchQuery]);
     
     // Use filteredTasks and filter for completed ones instead of completedTasks
     const filteredCompletedTasks = taskStore.filteredTasks.filter(task => task.completed);

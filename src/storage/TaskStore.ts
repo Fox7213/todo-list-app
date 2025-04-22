@@ -3,7 +3,7 @@ import { flow, makeAutoObservable, runInAction } from 'mobx';
 import $api from '../../api/http';
 
 export interface Task {
-  id: number;
+  id: string;
   title: string;
   description: string;
   completed: boolean;
@@ -18,6 +18,7 @@ export class TaskStore {
   error: string | null = null;
   searchQuery: string = '';
   statusFilter: 'all' | 'completed' | 'inProgress' = 'all';
+  orderFilter: string = '';
 
   lastFetched: number | null = null;
   fetchDebounceTimeout: number | null = null;
@@ -124,7 +125,7 @@ export class TaskStore {
 
   // Toggle task status
   // patch /api/tasks/:id/status
-  toggleTaskStatus = async (id: number) => {
+  toggleTaskStatus = async (id: string) => {
     const task = this.tasks.find(task => task.id === id);
     if (!task) return;
     
@@ -164,7 +165,7 @@ export class TaskStore {
 
   // Edit task
   // patch /api/tasks/:id
-  editTask = async (id: number, title: string, description: string, priority: number, createdAt: Date, dueDate?: Date | null) => {
+  editTask = async (id: string, title: string, priority: number, createdAt: Date, description?: string, dueDate?: Date | null) => {
     this.isLoading = true;
     this.error = null;
     console.log(id, title, description, priority, createdAt, dueDate);
@@ -196,7 +197,7 @@ export class TaskStore {
 
   // Delete task
   // delete /api/tasks/:id
-  deleteTask = async (id: number) => {
+  deleteTask = async (id: string) => {
     this.isLoading = true;
     this.error = null;
     
@@ -226,6 +227,11 @@ export class TaskStore {
     this.statusFilter = filter;
   }
 
+  // Set priority filter
+  setOrderFilter = (priority: string) => {
+    this.orderFilter = priority;
+  }
+
   get completedTasks() {
     return this.tasks.filter(task => task.completed);
   }
@@ -245,11 +251,20 @@ export class TaskStore {
     }
     
     // Apply status filter
-    return filtered.filter(task => {
+    filtered = filtered.filter(task => {
       if (this.statusFilter === 'all') return true;
       if (this.statusFilter === 'completed') return task.completed;
       if (this.statusFilter === 'inProgress') return !task.completed;
       return true;
     });
+    
+    // Apply priority filter
+    if (this.orderFilter) {
+      filtered = filtered.filter(task => 
+        task.order?.toString() === this.orderFilter
+      );
+    }
+    
+    return filtered;
   }
 } 

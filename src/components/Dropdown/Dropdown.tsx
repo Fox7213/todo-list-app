@@ -9,7 +9,7 @@ export interface DropdownOption {
 }
 
 interface DropdownProps {
-  label: string;
+  label?: string;
   placeholder?: string;
   iconSrc?: string;
   options: DropdownOption[];
@@ -19,7 +19,7 @@ interface DropdownProps {
 }
 
 const Dropdown = ({
-  label,
+  label = '',
   placeholder = 'Select an option',
   iconSrc,
   options,

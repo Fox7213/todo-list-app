@@ -9,10 +9,24 @@
     padding: 16px;
 }
 
+.titleContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10%;
+}
+
+.priorityIndicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
 .Name{
     font-size: 19px;
     font-weight: 600;
-    margin-bottom: 10%;
+    margin: 0;
 }
 
 .date{
@@ -41,9 +55,5 @@
 .left{
     display: flex;
     flex-direction: column;
-    // height: 80px;
     justify-content: space-between;
-    /* img{
-        margin-bottom: 10%;
-    } */
 }

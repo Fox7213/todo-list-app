@@ -19,7 +19,7 @@ import icDel from "../../image/Modal/icDel.svg";
 interface ModalProps {
   task: Task;
   onClose: () => void;
-  onDelete: (id: number) => void;
+  onDelete: (id: string) => void;
 }
 
 const Modal = ({onClose, onDelete, task}: ModalProps) => {
@@ -27,7 +27,7 @@ const Modal = ({onClose, onDelete, task}: ModalProps) => {
 
     const modalRef = useRef<HTMLDivElement>(null);
     const [title, setTitle] = useState(task.title);
-    const [description, setDescription] = useState(task.description);
+    const [description, setDescription] = useState(task.description || "");
     const [priority, setPriority] = useState(task.order);
     const [createdAt, setCreatedAt] = useState(task.createdAt);
     const [dueDate, setDueDate] = useState(task.dueDate);
@@ -35,17 +35,17 @@ const Modal = ({onClose, onDelete, task}: ModalProps) => {
     // Use the custom hook for handling outside clicks
     useOutsideClick(modalRef, onClose);
 
-    const onEditTask = async (taskId?: number) => {
+    const onEditTask = async (taskId: string) => {
         if (!taskId) return;
         try {
-            await taskStore.editTask(taskId, title, description, priority, createdAt, dueDate);
+            await taskStore.editTask(taskId, title, priority, createdAt, description, dueDate);
             onClose();
         } catch (e) {
             console.log(e);
         }
     }
 
-    const onMarkAsCompleted = async (taskId?: number) => {
+    const onMarkAsCompleted = async (taskId: string) => {
         if (!taskId) return;
         try {
             await taskStore.toggleTaskStatus(taskId);
