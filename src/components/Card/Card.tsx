@@ -51,7 +51,7 @@ const Card = ({task, deleteTask, onSetStatus}: CardProps) => {
                         />
                         <h1 className={style.Name}>{title}</h1>
                     </div>
-                    <p className={style.date}>Start date: <span>07-07-2023</span></p>
+                    <p className={style.date}>Start date: <span>{new Date(task.createdAt).toLocaleDateString()}</span></p>
                     <div className={style.stateTask} onClick={() => onSetStatus(id)}>
                         {
                             completed ? <><img className={style.mark} src={checkCircle} alt=""/> <span>completed</span></> : <><img className={style.mark} src={mark} alt=""/> <span>Mark as completed</span></>
