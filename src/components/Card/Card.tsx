@@ -1,16 +1,14 @@
 import { useState } from 'react';
 
-import { Priority } from '../../models/Task';
-import { Task } from '../../storage/TaskStore';
-import Modal from '../Modal/Modal';
-
-import style from "./Card.module.scss";
+import { Priority, Task } from '../../models/Task';
 
 import i1 from "../../image/Card/1.svg";
 import i2 from "../../image/Card/2.svg";
 import i3 from "../../image/Card/3.svg";
 import checkCircle from "../../image/Card/checkCircle.svg";
 import mark from "../../image/Card/mark.svg";
+import Modal from '../Modal/Modal';
+import style from "./Card.module.scss";
 
 interface CardProps {
   task: Task;

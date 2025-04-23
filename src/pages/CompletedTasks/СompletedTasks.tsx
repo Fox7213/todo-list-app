@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 
-import Card from "../../components/Card/Card";
+import CardList from "../../components/CardList/CardList";
 import CustomButton from '../../components/CustomButton/CustomButton';
 import Input from "../../components/Input/Input";
 import { useStore } from "../../storage/StoreContext";
@@ -73,14 +73,11 @@ const CompletedTasks = observer(() => {
                 {!isLoading && filteredCompletedTasks.length === 0 && (
                     <p>No completed tasks found</p>
                 )}
-                {tasksToDisplay.map(task => (
-                    <Card 
-                        key={task.id} 
-                        task={task} 
-                        deleteTask={deleteTask} 
-                        onSetStatus={toggleTaskStatus}
-                    />
-                ))}
+                <CardList 
+                    tasks={tasksToDisplay}
+                    toggleTaskStatus={toggleTaskStatus}
+                    deleteTask={deleteTask}
+                />
             </div>
 
             {hasMoreItems && (

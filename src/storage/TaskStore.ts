@@ -1,16 +1,7 @@
 import Fuse from 'fuse.js';
 import { flow, makeAutoObservable, runInAction } from 'mobx';
 import $api from '../../api/http';
-
-export interface Task {
-  id: string;
-  title: string;
-  description: string;
-  completed: boolean;
-  createdAt: Date;
-  dueDate?: Date;
-  order: number;
-}
+import { Task } from '../models/Task';
 
 export class TaskStore {
   tasks: Task[] = [];

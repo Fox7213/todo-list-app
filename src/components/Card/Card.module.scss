@@ -7,6 +7,7 @@
     color: #FFDDD2;
     border-radius: 7px;
     padding: 16px;
+    // z-index: -1;
 }
 
 .titleContainer {
@@ -41,6 +42,7 @@
 .stateTask{
     display: flex;
     align-items: center;
+    cursor: pointer;
 
     .mark{
         width: 18px;

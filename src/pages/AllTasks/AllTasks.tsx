@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { useStore } from '../../storage/StoreContext';
 
-import Card from "../../components/Card/Card";
+import CardList from '../../components/CardList/CardList';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import Dropdown from "../../components/Dropdown/Dropdown";
 import PriorityDropdown from "../../components/Dropdown/PriorityDropdown";
@@ -162,14 +162,11 @@ const AllTasks = observer(() => {
                     {!isLoading && filteredTasks.length === 0 && (
                         <p>No tasks found</p>
                     )}
-                    {tasksToDisplay.map(task => (
-                        <Card
-                            task={task}
-                            key={task.id} 
-                            onSetStatus={toggleTaskStatus}
-                            deleteTask={deleteTask}
-                        />
-                    ))}
+                    <CardList 
+                        tasks={tasksToDisplay}
+                        toggleTaskStatus={toggleTaskStatus}
+                        deleteTask={deleteTask}
+                    />
                 </div>
 
                 {hasMoreItems && (
