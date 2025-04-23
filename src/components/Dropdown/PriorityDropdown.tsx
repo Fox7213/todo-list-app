@@ -4,13 +4,14 @@ import Dropdown, { DropdownOption } from './Dropdown';
 import i3 from '../../image/Inputs/i3.svg';
 
 interface PriorityDropdownProps {
+  label?: string;
   value?: string;
   onChange?: (value: string) => void;
   includeEmpty?: boolean;
   placeholder?: string;
 }
 
-const PriorityDropdown = ({ value, onChange, includeEmpty = false, placeholder = 'Priority' }: PriorityDropdownProps) => {
+const PriorityDropdown = ({ value, onChange, includeEmpty = false, placeholder = 'Priority', label = 'Priority' }: PriorityDropdownProps) => {
   const priorityOptions: DropdownOption[] = [
     { value: Priority.HIGH.toString(), label: 'High Priority', color: '#E63946' },
     { value: Priority.MEDIUM.toString(), label: 'Medium Priority', color: '#F4A261' },
@@ -29,6 +30,7 @@ const PriorityDropdown = ({ value, onChange, includeEmpty = false, placeholder =
       onChange={onChange}
       placeholder={placeholder}
       iconSrc={i3}
+      label={label}
     />
   );
 };

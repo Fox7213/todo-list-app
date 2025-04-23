@@ -58,13 +58,23 @@ const Modal = ({onClose, onDelete, task}: ModalProps) => {
     return (
         <div className={style.All}>
             <div className={style.form} ref={modalRef}>
-                <Input 
-                    value={title} 
-                    onChange={(e) => setTitle((e.target.value))} 
-                    label="Task Title"
-                    placeholder="Task Title" 
-                    iconSrc={i1}
+                <div className={style.inputContainer}>
+                    <Input 
+                        value={title} 
+                        onChange={(e) => setTitle((e.target.value))} 
+                        label="Task Title"
+                        placeholder="Task Title" 
+                        iconSrc={i1}
                 />
+                </div>
+                <div className={style.inputContainer}>
+                    <PriorityDropdown
+                        label="Priority"
+                        value={priority.toString()}
+                    onChange={(value) => setPriority(parseInt(value))}
+                />
+                </div>
+                <div className={style.inputContainer}>
                 <DatePicker
                     label="Start date"
                     placeholder="Select start date"
@@ -72,17 +82,16 @@ const Modal = ({onClose, onDelete, task}: ModalProps) => {
                     selected={createdAt ? new Date(createdAt) : null}
                     onChange={(date) => setCreatedAt(date || new Date())}
                 />
+                </div>
+                <div className={style.inputContainer}>
                 <DatePicker
                     label="End date"
                     placeholder="Select end date"
                     iconSrc={i2}
                     selected={dueDate ? new Date(dueDate) : null}
-                    onChange={(date) => setDueDate(date || undefined)}
-                />
-                <PriorityDropdown 
-                    value={priority.toString()}
-                    onChange={(value) => setPriority(parseInt(value))}
-                />
+                        onChange={(date) => setDueDate(date || undefined)}
+                    />
+                </div>
 
                 <div className={style.textareaContainer}>
                     <label className={style.textareaLabel}>Task description</label>

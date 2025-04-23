@@ -15,7 +15,7 @@
 
 .form{
     background-color: #FFDDD2;
-    padding: 30px;
+    padding: 30px 30% 30px 30px;
     border-radius: 16px;
     max-width: 90vw;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
@@ -29,9 +29,19 @@
     gap: 30px 10%;
 }
 
+.inputContainer {
+    display: flex;
+    flex-grow: 1;
+    width: calc(40% - 10px);
+
+    & > * {
+        width: 100%;
+    }
+}
+
 
 .textareaContainer {
-    margin-top: 2%;
+    margin-top: 10px;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -48,13 +58,11 @@
     min-height: 120px;
     padding: 0.75rem;
     font-size: 1rem;
-    border: 1px solid #cbd5e0;
     border-radius: 6px;
     outline: none;
     border: 3px solid #006D77;
     background: none;
-
-  }
+}
 
 
 

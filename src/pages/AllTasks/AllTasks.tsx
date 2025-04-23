@@ -126,6 +126,7 @@ const AllTasks = observer(() => {
                     <div className={style.AllRight}>
                         <div className={style.dropdownWrapper}>
                             <PriorityDropdown 
+                                label=""
                                 onChange={handlePriorityChange}
                                 placeholder="By Priority"
                                 includeEmpty={true}
