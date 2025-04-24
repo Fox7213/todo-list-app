@@ -32,7 +32,7 @@ const Modal = ({onClose, onDelete, task}: ModalProps) => {
     const [createdAt, setCreatedAt] = useState(task.createdAt);
     const [dueDate, setDueDate] = useState(task.dueDate);
 
-    // Use the custom hook for handling outside clicks
+    // внешний клик хук
     useOutsideClick(modalRef, onClose);
 
     const onEditTask = async (taskId: string) => {

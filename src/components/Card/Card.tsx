@@ -16,14 +16,14 @@ interface CardProps {
   onSetStatus: (id: string) => Promise<void>;
 }
 
-// Priority color mapping using the Priority enum
+// приоритет цвета
 const priorityColors: Record<number, string> = {
   [Priority.HIGH]: '#E63946',   // High - Red
   [Priority.MEDIUM]: '#F4A261', // Medium - Orange
   [Priority.LOW]: '#2A9D8F',    // Low - Green
 };
 
-// Default color when priority is not set
+// Цвет по умолчанию, если приоритет не установлен
 const DEFAULT_COLOR = '#83C5BE';
 
 const Card = ({task, deleteTask, onSetStatus}: CardProps) => {
@@ -34,7 +34,7 @@ const Card = ({task, deleteTask, onSetStatus}: CardProps) => {
         setIsModalOpen(false);
     }
 
-    // Get priority color based on task priority
+    // Получение приорит цвета на основе приоритета задачи
     const getPriorityColor = () => {
         if (order === undefined) return DEFAULT_COLOR;
         return priorityColors[order] || DEFAULT_COLOR;

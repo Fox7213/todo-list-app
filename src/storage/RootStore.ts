@@ -7,12 +7,12 @@ export class RootStore {
     this.taskStore = new TaskStore();
   }
 
-  // Initialize all application data
+  // Подготовка всех данных для работы приложения
   initialize = async () => {
     await this.taskStore.fetchTasks();
   }
 }
 
-// Create a single instance of the store
+// Создание единств экз хранилища
 const rootStore = new RootStore();
 export default rootStore; 

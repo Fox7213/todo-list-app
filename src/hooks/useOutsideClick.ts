@@ -1,10 +1,10 @@
 import { useEffect, RefObject } from 'react';
 
 /**
- * Hook that alerts when you click outside of the passed ref
- * @param ref - Reference to the element to detect clicks outside of
- * @param callback - Function to call when a click outside is detected
- * @param dependencies - Optional array of dependencies to re-attach the event listener
+ * Хук, который срабатывает при клике вне элемента, на который указывает ref
+ * @param ref - Ссылка на элемент, за пределами отслеживать клики
+ * @param callback - Функция,вызвана при клике за пределами элемента
+ * @param dependencies - Необязательный массив зависимостей, обработчик кликов при изменении
  */
 function useOutsideClick<T extends HTMLElement = HTMLElement>(
   ref: RefObject<T | null>,
@@ -18,10 +18,10 @@ function useOutsideClick<T extends HTMLElement = HTMLElement>(
       }
     };
 
-    // Attach the event listener
+    // Установка обработчик событий
     document.addEventListener('mousedown', handleClickOutside);
     
-    // Clean up the event listener
+    // Откл обработчик событий
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };

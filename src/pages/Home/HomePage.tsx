@@ -34,23 +34,23 @@ const HomePage = observer(() => {
         filteredTasks
     } = taskStore;
 
-    // State for active drag
+    // перетаскивание
     const [activeId, setActiveId] = useState<string | null>(null);
     const [activeTask, setActiveTask] = useState<Task | null>(null);
 
-    // Filter by completion status after applying search filter
+    // Фильтрация по статусу завершения 
     const filteredRunningTasks = filteredTasks.filter(task => !task.completed);
     const filteredCompletedTasks = filteredTasks.filter(task => task.completed);
 
-    // Get the most recent tasks
+    // получение послед задач
     const recentRunningTasks = filteredRunningTasks.slice(0, RECENT_TASKS);
     const recentCompletedTasks = filteredCompletedTasks.slice(0, RECENT_TASKS);
 
-    // Configure sensors for drag and drop
+    // Настройка датчиков перетаскивания
     const sensors = useSensors(
         useSensor(MouseSensor, {
             activationConstraint: {
-                distance: 10, // Minimum drag distance before activation
+                distance: 10, // Мин расстояние перетаскивания 
             },
         })
     );
@@ -63,41 +63,41 @@ const HomePage = observer(() => {
         await toggleTaskStatus(id);
     };
 
-    // Handle drag start
+    // начало перетаскивания
     const handleDragStart = (event: DragStartEvent) => {
         const { active } = event;
         setActiveId(active.id as string);
         
-        // Find the task being dragged
+        // поиск задачи, которая перетаскивается
         const task = filteredTasks.find(t => t.id === active.id);
         if (task) {
             setActiveTask(task);
         }
     };
 
-    // Handle drag over
+    // Обрабатывайте перетаскивание над
     const handleDragOver = (event: DragOverEvent) => {
-        // Optional: Add visual feedback for valid drop targets
+        //  визуальная подсказка
         console.log('Drag over:', event.over?.id, event.over);
     };
 
-    // Handle drag end
+    // завершение перетаскивания
     const handleDragEnd = async (event: DragEndEvent) => {
         const { active, over } = event;
         
         console.log('Drag end:', { active: active.id, over: over?.id });
         
         if (over) {
-            // Check if dragged to a different container
+            // проверка перетаскивания
             const isRunningContainer = over.id === 'running-tasks';
             const isCompletedContainer = over.id === 'completed-tasks';
             
             if ((isRunningContainer || isCompletedContainer) && activeId) {
-                // Find the task
+                // Найти задачу
                 const task = filteredTasks.find(t => t.id === activeId);
                 
                 if (task) {
-                    // If dragged to a different status container, toggle the status
+                    // при перетаскивание изм статус
                     if ((isRunningContainer && task.completed) || 
                         (isCompletedContainer && !task.completed)) {
                         await toggleTaskStatus(activeId);
@@ -106,7 +106,7 @@ const HomePage = observer(() => {
             }
         }
         
-        // Reset active state
+        // Сбросить активное состояние
         setActiveId(null);
         setActiveTask(null);
     };
@@ -160,7 +160,7 @@ const HomePage = observer(() => {
                 </div>
             </div>
             
-            {/* Drag overlay for visual feedback */}
+            {/* Визуальное наложение при перетаскивании. */}
             <DragOverlay>
                 {activeTask && (
                     <Card 

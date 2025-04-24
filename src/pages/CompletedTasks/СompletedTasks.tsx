@@ -10,40 +10,40 @@ import style from "./Completed.module.scss";
 
 import iconSrc from "../../image/Header/iconSrc.svg";
 
-// Number of tasks to display per page
+//  Колво задач для отображения на странице
 const ITEMS_PER_PAGE = 6;
 
 const CompletedTasks = observer(() => {
     const { taskStore } = useStore();
     const { isLoading, deleteTask, toggleTaskStatus, setSearchQuery, searchQuery } = taskStore;
     
-    // Reset filters when component unmounts
+    // Обнулить фильтры при удалении компонента
     useEffect(() => {
         return () => {
-            // This cleanup function runs when component unmounts
+            // функция очистки, когда компонент удаляется
             setSearchQuery('');
         };
     }, [setSearchQuery]);
     
-    // Use filteredTasks and filter for completed ones instead of completedTasks
+    // вместо completedTasks исползовать filteredTasks и фильтруйте их для получения списка завершенных задачand 
     const filteredCompletedTasks = taskStore.filteredTasks.filter(task => task.completed);
     
-    // State for pagination
+    // состояние pagination
     const [visibleItems, setVisibleItems] = useState(ITEMS_PER_PAGE);
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value);
-        // Reset pagination when search changes
+        // Обнулить pagination при изменении поискового запроса 
         setVisibleItems(ITEMS_PER_PAGE);
     };
     
-    // Get only the tasks that should be visible based on current pagination
+    // Получение только видимых задач, соответствующие текущей странице.
     const tasksToDisplay = filteredCompletedTasks.slice(0, visibleItems);
     
-    // Check if there are more items to load
+    // Проверка, есть ли еще элементы для загрузки
     const hasMoreItems = filteredCompletedTasks.length > visibleItems;
     
-    // Handle load more button click
+    // обработка клика more button 
     const handleLoadMore = () => {
         setVisibleItems(prev => prev + ITEMS_PER_PAGE);
     };

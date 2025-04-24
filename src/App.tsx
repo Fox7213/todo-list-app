@@ -17,15 +17,6 @@ function App() {
 
     return (
         <ThemeProvider>
-            <Global
-                styles={theme => css`
-                    body {
-                        background-color: ${theme.colors.background};
-                        color: ${theme.colors.text};
-                        transition: all 0.3s ease;
-                    }
-                `}
-            />
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Layout/>}>

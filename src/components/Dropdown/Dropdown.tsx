@@ -33,12 +33,12 @@ const Dropdown = ({
   );
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Use the custom hook for handling outside clicks
+  // внешний клик хук
   useOutsideClick(dropdownRef, () => {
     setIsOpen(false);
   });
 
-  // Update selected option when value prop changes
+  // обнова и изменение
   useEffect(() => {
     if (value) {
       const option = options.find(opt => opt.value === value);

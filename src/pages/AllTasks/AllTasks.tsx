@@ -14,7 +14,7 @@ import style from "./Alltasks.module.scss";
 import iconSrc from "../../image/Header/iconSrc.svg";
 import i3 from '../../image/Inputs/i3.svg';
 
-// Number of tasks to display per page
+// Количество задач на странице
 const ITEMS_PER_PAGE = 6;
 
 const AllTasks = observer(() => {
@@ -34,16 +34,16 @@ const AllTasks = observer(() => {
     const location = useLocation();
     const [searchParams] = useSearchParams();
     
-    // State to track the selected status in the dropdown
+    // Состояние для отслеживания выбранного статуса в выпадающем списке
     const [selectedStatus, setSelectedStatus] = useState('');
     
-    // Set initial status filter based on URL parameter
+    // Установить начальный фильтр статуса на основе параметра URL
     useEffect(() => {
         const statusParam = searchParams.get('status');
         if (statusParam) {
             setStatusFilter(statusParam as 'all' | 'completed' | 'inProgress');
             
-            // Update the dropdown value to match the filter
+            // Обновить значение выпадающего списка в соответствии с фильтром
             if (statusParam === 'inProgress') {
                 setSelectedStatus('In Progress');
             } else if (statusParam === 'completed') {
@@ -54,25 +54,25 @@ const AllTasks = observer(() => {
         }
     }, [searchParams, setStatusFilter]);
     
-    // Reset filters when component unmounts or when location changes
+    // Обнулить фильтры при удалении компонента из DOM или смене адреса
     useEffect(() => {
         return () => {
-            // This cleanup function runs when component unmounts
+            // функция очистки, когда компонент удаляется.
             setSearchQuery('');
             setStatusFilter('all');
             setOrderFilter('');
         };
     }, [setSearchQuery, setStatusFilter, setOrderFilter]);
     
-    // Use filteredTasks instead of tasks to get search results
+    // использовать filteredTasks вместо tasks для результатов поиска
     const filteredTasks = taskStore.filteredTasks;
     
-    // State for pagination
+    // состояние  pagination
     const [visibleItems, setVisibleItems] = useState(ITEMS_PER_PAGE);
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value);
-        // Reset pagination when search changes
+        // сброс настройки pagination при изменении критериев поиска
         setVisibleItems(ITEMS_PER_PAGE);
     };
     
@@ -86,28 +86,28 @@ const AllTasks = observer(() => {
         } else {
             setStatusFilter('all');
         }
-        // Reset pagination when filter changes
+        // Сбросить пагинацию при изменении фильтра
         setVisibleItems(ITEMS_PER_PAGE);
     };
     
     const handlePriorityChange = (value: string) => {
         setOrderFilter(value);
-        // Reset pagination when filter changes
+        // Сбросить пагинацию при изменении фильтра
         setVisibleItems(ITEMS_PER_PAGE);
     };
     
-    // Get only the tasks that should be visible based on current pagination
+    // Отобрать только задачи, отображаемые на текущей странице с учетом pagination
     const tasksToDisplay = filteredTasks.slice(0, visibleItems);
     
-    // Check if there are more items to load
+    // Проверка, есть ли еще элементы для загрузки
     const hasMoreItems = filteredTasks.length > visibleItems;
     
-    // Handle load more button click
+    // обработка клика more button 
     const handleLoadMore = () => {
         setVisibleItems(prev => prev + ITEMS_PER_PAGE);
     };
 
-    // Status filter options
+    // Варианты фильтрации по статусу
     const statusOptions = [
         { value: '', label: 'All Statuses' },
         { value: 'In Progress', label: 'In Progress' },

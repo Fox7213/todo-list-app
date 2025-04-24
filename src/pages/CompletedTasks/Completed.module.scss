@@ -52,20 +52,20 @@
     gap: 20px;
     
     & > div {
-      flex: 0 0 calc(33.333% - 14px); /* Exact width for 3 items per row with 20px gap */
+      flex: 0 0 calc(33.333% - 14px); /* точная ширина для 3 эл */
       margin-bottom: 20px;
     }
     
-    /* Responsive adjustments */
+    /* Адаптив */
     @media (max-width: 1200px) {
       & > div {
-        flex: 0 0 calc(50% - 10px); /* 2 items per row on medium screens */
+        flex: 0 0 calc(50% - 10px); /* 2 элемента в ряд для экранов средней ширины */
       }
     }
     
     @media (max-width: 768px) {
       & > div {
-        flex: 0 0 100%; /* 1 item per row on small screens */
+        flex: 0 0 100%; /* 1 элемента в ряд для экранов мал ширины */
       }
     }
   }

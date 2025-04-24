@@ -36,18 +36,18 @@ const DatePicker = ({
   const [inputValue, setInputValue] = useState('');
   const datePickerRef = useRef<HTMLDivElement>(null);
 
-  // Use the custom hook for handling outside clicks
+  //  хук для обработки внешних кликов
   useOutsideClick(datePickerRef, () => {
     setIsCalendarOpen(false);
   });
 
-  // Update internal state when the selected prop changes
+  // Обновлять внутреннее состояние при изменении
   useEffect(() => {
     setSelectedDate(selected || null);
     setInputValue(selected ? format(selected, dateFormat) : '');
   }, [selected, dateFormat]);
 
-  // Handle date selection
+  // Выбор даты 
   const handleDaySelect = (date: Date | undefined) => {
     const newDate = date || null;
     setSelectedDate(newDate);
@@ -59,14 +59,14 @@ const DatePicker = ({
     }
   };
 
-  // Handle input click to open calendar
+  // Обработка клика открытие календаря
   const handleInputClick = () => {
     if (!disabled) {
       setIsCalendarOpen(!isCalendarOpen);
     }
   };
 
-  // Create disabled days based on minDate and maxDate
+  // огранич minDate и maxDate
   const disabledDays = {
     before: minDate,
     after: maxDate,
@@ -80,7 +80,7 @@ const DatePicker = ({
           placeholder={placeholder}
           iconSrc={iconSrc}
           value={inputValue}
-          // Make the input read-only since we handle the value
+          // поле ввода только для чтения
           onChange={() => {}}
         />
       </div>

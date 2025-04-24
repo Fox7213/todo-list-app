@@ -18,7 +18,7 @@ const PriorityDropdown = ({ value, onChange, includeEmpty = false, placeholder =
     { value: Priority.LOW.toString(), label: 'Low Priority', color: '#2A9D8F' },
   ];
   
-  // Add empty option if requested
+  // возможность добавления пустого варианта
   const options = includeEmpty 
     ? [{ value: '', label: 'All Priorities' }, ...priorityOptions] 
     : priorityOptions;

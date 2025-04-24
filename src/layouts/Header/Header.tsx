@@ -26,7 +26,7 @@ const Header = observer(({ onBurgerClick }: HeaderProps) => {
     const location = useLocation();
     const { toggleTheme } = useTheme();
     
-    // Check if we're on the home page
+    // проверка нахождения на странице Home
     const isHomePage = location.pathname === '/';
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
